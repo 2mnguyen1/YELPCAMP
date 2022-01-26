@@ -1,32 +1,31 @@
 <% layout('layouts/boilerplate.ejs') %>
 
 
+
     <h1>ALL CAMPs</h1>
     <div><a class="btn btn-warning mb-3" href="/campgrounds/new">Add a new campground</a></div>
-    <ul>
-        <% for (let campground of campgrounds) { %>
-            <div class="card d-flex flex-row p-b-5 mb-3">
-                <div class="col-md-4" style="max-height: 30vh;">
-                    <img src="<%= campground.img %> " alt="" class="card-img img-fluid">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <%= campground.title %>
-                        </h5>
-                        <p class="card-text">
-                            <%= campground.description %>
-                        </p>
-                        <p class="card-text">
-                            <small class="text-muted">
-                                <%= campground.location %>
-                            </small>
-                        </p>
-                        <a href="campgrounds/<%= campground._id %>" class="btn btn-primary">View
-                            <%=campground.title%>
-                        </a>
-                    </div>
+    <% for (let campground of campgrounds) { %>
+        <div class="card d-flex flex-row p-b-5 mb-3">
+            <div class="col-md-4" style="max-height: 30vh;">
+                <img src="<%= campground.img %> " alt="" class="card-img img-fluid">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <%= campground.title %>
+                    </h5>
+                    <p class="card-text">
+                        <%= campground.description %>
+                    </p>
+                    <p class="card-text">
+                        <small class="text-muted">
+                            <%= campground.location %>
+                        </small>
+                    </p>
+                    <a href="campgrounds/<%= campground._id %>" class="btn btn-primary">View
+                        <%=campground.title%>
+                    </a>
                 </div>
             </div>
-            <% } %>
-    </ul>
+        </div>
+        <% } %>
