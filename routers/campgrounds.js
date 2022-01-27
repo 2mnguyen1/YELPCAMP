@@ -27,16 +27,16 @@ router.get('/new', isLoggedIn, (req, res) => {
     res.render('campgrounds/new');
 })
 router.post('/', isLoggedIn, validateCampground, catchAsync(async (req, res) => {
-    // if (!req.body.campground) throw new ExpressError('Invalid campground', 404);
-    req.flash('success', 'Sucessfully made a new campground!');
     const newCampground = new Campground(req.body.campground);
+    newCampground.author = req.user._id;
     await newCampground.save();
+    req.flash('success', 'Sucessfully made a new campground!');
     res.redirect(`/campgrounds/${newCampground._id}`);
 }))
 // show one 
 router.get('/:id', catchAsync(async (req, res) => {
     const { id } = req.params;
-    const campground = await Campground.findById(id).populate('reviews');
+    const campground = await Campground.findById(id).populate('reviews').populate('author');
     if (!campground) {
         req.flash('error', 'Cannot find campground!');
         return res.redirect('/campgrounds');
@@ -52,12 +52,21 @@ router.get('/:id/edit', isLoggedIn, catchAsync(async (req, res) => {
         req.flash('error', 'Cannot find campground!');
         return res.redirect('/campgrounds');
     }
+    if (!campground.author.equals(req.user._id)) {
+        req.flash('error', 'You do not have permission to edit!');
+        return res.redirect(`/campgrounds/${id}`)
+    }
     res.render('campgrounds/edit', { campground });
 }))
 router.put('/:id', isLoggedIn, validateCampground, catchAsync(async (req, res) => {
-    req.flash('success', 'Successfully updated campground!');
     const { id } = req.params;
-    const campground = await Campground.findByIdAndUpdate(id, { ...req.body.campground }, { runValidators: true, new: true });
+    const campground = await Campground.findById(id);
+    if (!campground.author.equals(req.user._id)) {
+        req.flash('error', 'You do not have permission to edit!');
+        return res.redirect(`/campgrounds/${id}`)
+    }
+    const camp = await Campground.findByIdAndUpdate(id, { ...req.body.campground }, { runValidators: true, new: true });
+    req.flash('success', 'Successfully updated campground!');
     res.redirect(`/campgrounds/${campground._id}`);
 }))
 // delete
