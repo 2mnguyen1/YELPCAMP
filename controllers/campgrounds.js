@@ -1,3 +1,4 @@
+const campgrounds = require('../models/campgrounds');
 const Campground = require('../models/campgrounds');
 
 // all 
@@ -12,8 +13,13 @@ module.exports.newRoute = (req, res) => {
 
 module.exports.newCampgrounds = async (req, res) => {
     const newCampground = new Campground(req.body.campground);
+    newCampground.img = req.files.map(file => ({
+        url: file.path,
+        filename: file.filename
+    }))
     newCampground.author = req.user._id;
     await newCampground.save();
+    console.log(newCampground)
     req.flash('success', 'Sucessfully made a new campground!');
     res.redirect(`/campgrounds/${newCampground._id}`);
 }
