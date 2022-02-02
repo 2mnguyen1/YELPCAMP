@@ -33,7 +33,6 @@ CampgroundSchema.post('findOneAndDelete', async function(camp){
             }
         })
     }
-    console.log(camp.reviews)
 }) // delete any reviews that have id inside camp.review
 
 

@@ -7,7 +7,7 @@
     <% for (let campground of campgrounds) { %>
         <div class="card d-flex flex-row p-b-5 mb-3">
             <div class="col-md-4" style="max-height: 30vh;">
-                <img src="<%= campground.img %> " alt="" class="card-img img-fluid">
+                <img src="<%= campground.img[0].url %>" alt="" class="card-img img-fluid">
             </div>
             <div class="col-md-8">
                 <div class="card-body">
