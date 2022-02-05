@@ -7,7 +7,11 @@
     <% for (let campground of campgrounds) { %>
         <div class="card d-flex flex-row p-b-5 mb-3">
             <div class="col-md-4" style="max-height: 30vh;">
-                <img src="<%= campground.img[0].url %>" alt="" class="card-img img-fluid">
+                <% if (campground.img.length) {%>
+                    <img src="<%= campground.img[0].url %>" alt="" class="card-img img-fluid">
+                    <% } else {%>
+                        <img src="https://res.cloudinary.com/douqbebwk/image/upload/v1600060601/YelpCamp/ruyoaxgf72nzpi4y6cdi.png" alt="" class="card-img img-fluid">
+                        <% } %>
             </div>
             <div class="col-md-8">
                 <div class="card-body">

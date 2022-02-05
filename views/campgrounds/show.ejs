@@ -1,27 +1,27 @@
 <% layout('layouts/boilerplate.ejs') %>
     <link rel="stylesheet" href="/style/star.css">
+
     <div class="row">
         <div class="col-6">
+
             <div id="campgroundControls" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                    <% campground.img.forEach( (img, i) => { %>
+                    <% campground.img.forEach( (img, i)=> { %>
                         <div class="carousel-item <%= i === 0 ? 'active' : ''%>">
                             <img src="<%= img.url %>" class="d-block w-100" alt="">
                         </div>
-                    <% }) %>
+                        <% }) %>
                 </div>
-                <% if (campground.img.length > 1) { %> 
-                <button class="carousel-control-prev" type="button" data-bs-target="#campgroundControls"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#campgroundControls"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-                <% } %> 
+                <% if (campground.img.length> 1) { %>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#campgroundControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#campgroundControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                    <% } %>
             </div>
             <div class="card" style="width: 30vw;">
                 <div class="card-body">
@@ -37,9 +37,11 @@
                         <%= campground.location %>
                     </li>
                     <li class="list-group-item">
-                        Submitted by <%= campground.author.username %>
+                        Submitted by
+                        <%= campground.author.username %>
                     </li>
-                    <li class="list-group-item">$<%= campground.price %>/night</li>
+                    <li class="list-group-item">$
+                        <%= campground.price %>/night</li>
                 </ul>
                 <% if (currentUser && campground.author.equals(currentUser._id)) { %>
                     <div class="card-body">
@@ -53,18 +55,17 @@
             </div>
         </div>
         <dib class="col-6">
+            <div id='map' style='width: 400px; height: 300px;'></div>
             <% if (currentUser) { %>
                 <h2>Leave a Review</h2>
-                <form class="mb-3 needs-validation" novalidate action="/campgrounds/<%= campground._id %>/reviews"
-                    method="POST">
+                <form class="mb-3 needs-validation" novalidate action="/campgrounds/<%= campground._id %>/reviews" method="POST">
                     <!-- <div class="mb3">
                         <label class="form-label" for="rating">Rate:</label>
                         <input class="form-range" type="range" min="1" max="5" name="review[rating]" id="rating">
                     </div> -->
                     <div class="mb-3">
                         <fieldset class="starability-basic">
-                            <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1"
-                                checked aria-label="No rating." />
+                            <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
                             <input type="radio" id="first-rate1" name="review[rating]" value="1" />
                             <label for="first-rate1" title="Terrible">1 star</label>
                             <input type="radio" id="first-rate2" name="review[rating]" value="2" />
@@ -79,8 +80,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="body">Review:</label>
-                        <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3"
-                            required></textarea>
+                        <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3" required></textarea>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
@@ -92,18 +92,19 @@
                         <div class="card mb-3">
                             <div class="card-body">
                                 <h5 class="card-title">
-                                    By <%= review.author.username %>
+                                    By
+                                    <%= review.author.username %>
                                 </h5>
                                 <p class="starability-result" data-rating="<%= review.rating %>">
-                                    Rated: <%= review.rating %> stars
+                                    Rated:
+                                    <%= review.rating %> stars
                                 </p>
                                 <p class="card-text">
-                                    Review: <%= review.body %>
+                                    Review:
+                                    <%= review.body %>
                                 </p>
                                 <% if (currentUser && review.author.equals(currentUser._id)){ %>
-                                    <form
-                                        action="/campgrounds/<%= campground._id %>/reviews/<%= review._id %>?_method=DELETE"
-                                        method="POST">
+                                    <form action="/campgrounds/<%= campground._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
                                         <button class=" btn btn-danger btn-sm">Delete</button>
                                     </form>
                                     <% } %>
@@ -112,3 +113,8 @@
                         <% } %>
         </dib>
     </div>
+    <script>
+        const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
+        const campground = <%- JSON.stringify(campground) %>;
+    </script>
+    <script src="/js/showMap.js"></script>
