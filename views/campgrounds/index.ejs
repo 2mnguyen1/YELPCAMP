@@ -1,7 +1,5 @@
 <% layout('layouts/boilerplate.ejs') %>
-
-
-
+    <div id="map" style="width: 100%; height:300px"></div>
     <h1>ALL CAMPs</h1>
     <div><a class="btn btn-warning mb-3" href="/campgrounds/new">Add a new campground</a></div>
     <% for (let campground of campgrounds) { %>
@@ -33,3 +31,9 @@
             </div>
         </div>
         <% } %>
+        <script>
+            const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
+            const campgrounds = {features: <%- JSON.stringify(campgrounds) %>};
+        </script>
+
+        <script src="/js/clusterMap.js"></script>
