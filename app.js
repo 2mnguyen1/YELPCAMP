@@ -60,15 +60,6 @@ app.use((req, res, next) => {
     next();
 })
 
-app.get('/fakeuser', async (req, res) => {
-    const user = new User({
-        email: 'minh@gmail.com',
-        username: 'minh',
-    })
-    const newUser = await User.register(user, 'minhga');
-    res.send(newUser);
-})
-
 app.get('/', (req, res) => {
     res.render('home');
 })
