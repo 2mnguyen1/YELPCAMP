@@ -1,12 +1,12 @@
 <% layout('layouts/boilerplate.ejs') %>
-    <div id="map" style="width: 100%; height:300px"></div>
+    <div id="cluster-map"></div>
     <h1>ALL CAMPs</h1>
     <div><a class="btn btn-warning mb-3" href="/campgrounds/new">Add a new campground</a></div>
     <% for (let campground of campgrounds) { %>
         <div class="card d-flex flex-row p-b-5 mb-3">
             <div class="col-md-4" style="max-height: 30vh;">
                 <% if (campground.img.length) {%>
-                    <img src="<%= campground.img[0].url %>" alt="" class="card-img img-fluid">
+                    <img src="<%= campground.img[0].url %>" alt="" class="card-img img-fluid" style="max-height: 30vh;">
                     <% } else {%>
                         <img src="https://res.cloudinary.com/douqbebwk/image/upload/v1600060601/YelpCamp/ruyoaxgf72nzpi4y6cdi.png" alt="" class="card-img img-fluid">
                         <% } %>
