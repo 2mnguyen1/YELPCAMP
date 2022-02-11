@@ -24,11 +24,11 @@ const seedDB = async() => {
                 coordinates: [cities[random1000].longitude, cities[random1000].latitude]
             },
             img: [{
-                    url: 'https://res.cloudinary.com/douqbebwk/image/upload/v1600060601/YelpCamp/ahfnenvca4tha00h2ubt.png',
+                    url: 'https://res.cloudinary.com/deaxdf9ij/image/upload/v1644553083/YELPCAMP/ruyoaxgf72nzpi4y6cdi_i6az4z.png',
                     filename: 'YelpCamp/ahfnenvca4tha00h2ubt'
                 },
                 {
-                    url: 'https://res.cloudinary.com/douqbebwk/image/upload/v1600060601/YelpCamp/ruyoaxgf72nzpi4y6cdi.png',
+                    url: 'https://res.cloudinary.com/deaxdf9ij/image/upload/v1644553061/YELPCAMP/ahfnenvca4tha00h2ubt_fxalm3.png',
                     filename: 'YelpCamp/ruyoaxgf72nzpi4y6cdi'
                 }
             ]
