@@ -1,6 +1,8 @@
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
+
+
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -21,8 +23,11 @@ const helmet = require('helmet');
 const usersRoute = require('./routers/users')
 const campgroundsRoute = require('./routers/campgrounds')
 const reviewsRoute = require('./routers/reviews')
+const MongoStore = require('connect-mongo');
+const dbURL = process.env.DB_URL || 'mongodb://localhost:27017/YELPCAMP';
 
-mongoose.connect('mongodb://localhost:27017/YELPCAMP');
+// 'mongodb://localhost:27017/YELPCAMP'
+mongoose.connect(dbURL);
 
 
 app.set('view engine', 'ejs');
@@ -37,9 +42,24 @@ app.use(mongoSanitize({
     replaceWith: '_'
 }))
 
+const secret = process.env.SECRET || 'thisisverysecretdonttouch!!!';
+
+const store = MongoStore.create({
+    mongoUrl: dbURL,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret,
+    }
+})
+
+store.on("error", function(e) {
+    console.log("SESSION ERROR: ", e)
+})
+
 const sessionConfig = {
+    store,
     name: 'session',
-    secret: 'thisissecret',
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
